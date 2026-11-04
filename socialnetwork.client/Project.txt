@@ -1,0 +1,24 @@
+socialnetwork.client/src/
+├── main.tsx
+├── App.tsx
+├── routes/
+│   ├── AppRoutes.tsx          ← todas as rotas
+│   └── RoleGuard.tsx          ← o guard
+├── api/
+│   └── http.ts                ← fetch/axios com o token
+├── features/
+│   ├── auth/
+│   │   ├── AuthContext.tsx
+│   │   ├── types.ts
+│   │   ├── api.ts             ← login, register
+│   │   └── pages/             ← LoginPage, RegisterPage
+│   ├── users/
+│   │   ├── api.ts
+│   │   └── pages/             ← ProfilePage
+│   ├── posts/
+│   │   ├── api.ts
+│   │   ├── components/
+│   │   └── pages/             ← FeedPage
+│   └── admin/
+│       └── pages/             ← AdminPage
+└── components/                ← UI compartilhada (Layout, Button)

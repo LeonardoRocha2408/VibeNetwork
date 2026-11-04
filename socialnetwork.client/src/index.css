@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@utility border-gradient {
+    border: 2px solid transparent;
+    background:
+        linear-gradient(#000, #000) padding-box,
+        linear-gradient(to right, #7e22ce, #1d4ed8) border-box
+}
+
+input {
+    color: white;
+    background-color: transparent;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:autofill {
+    -webkit-text-fill-color: white;
+    caret-color: white;
+    -webkit-box-shadow: 0 0 0 1000px #000 inset;
+    box-shadow: 0 0 0 1000px #000 inset;
+}

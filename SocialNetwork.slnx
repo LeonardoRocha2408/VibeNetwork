@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="reactproject1/socialnetwork.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="SocialNetwork.Server/SocialNetwork.Server.csproj" />
+</Solution>
