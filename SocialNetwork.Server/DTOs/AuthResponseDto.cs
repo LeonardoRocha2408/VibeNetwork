@@ -11,6 +11,8 @@ namespace SocialNetwork.Server.Application.Users.DTOs
         public string Email {get; set;} = string.Empty;
         public string Username {get; set;} = string.Empty;
         public string DisplayName {get; set;} = string.Empty;
+        public int FollowersCount { get; set; } 
+        public int FollowedCount { get; set; }
         public string ProfilePictureUrl {get; set;} = string.Empty;
         public UserRole Role {get; set;}
     }

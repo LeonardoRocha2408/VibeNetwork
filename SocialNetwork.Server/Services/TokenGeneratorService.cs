@@ -14,7 +14,8 @@ public static class TokenGeneratorService
         var claims = new List<Claim>
         {
             new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new("token_type", "access")
         };
 
         var keyValue = Environment.GetEnvironmentVariable("JWT_SECRET_KEY");

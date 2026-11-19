@@ -17,10 +17,64 @@ namespace SocialNetwork.Server.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.22")
+                .HasAnnotation("ProductVersion", "9.0.23")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+
+            modelBuilder.Entity("PostScaffold", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("author_id");
+
+                    b.Property<int>("CommentsCount")
+                        .HasColumnType("int")
+                        .HasColumnName("coments_count");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("content");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTimeOffset>("DeletedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<int>("LikesCount")
+                        .HasColumnType("int")
+                        .HasColumnName("likes_count");
+
+                    b.Property<string>("MediaUrl")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("media");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("updated_at");
+
+                    b.Property<int>("Visibility")
+                        .HasColumnType("int")
+                        .HasColumnName("visibility");
+
+                    b.HasKey("Id")
+                        .HasName("post_id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("Posts");
+                });
 
             modelBuilder.Entity("RefreshTokenScaffold", b =>
                 {
@@ -75,6 +129,14 @@ namespace SocialNetwork.Server.Migrations
                         .HasColumnType("varchar(255)")
                         .HasColumnName("email");
 
+                    b.Property<int>("FollowedCount")
+                        .HasColumnType("int")
+                        .HasColumnName("followed_count");
+
+                    b.Property<int>("FollowersCount")
+                        .HasColumnType("int")
+                        .HasColumnName("followers_count");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("longtext")
@@ -108,6 +170,17 @@ namespace SocialNetwork.Server.Migrations
                         .IsUnique();
 
                     b.ToTable("users");
+                });
+
+            modelBuilder.Entity("PostScaffold", b =>
+                {
+                    b.HasOne("SocialNetwork.Server.Domain.Entities.UserScaffold", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("RefreshTokenScaffold", b =>

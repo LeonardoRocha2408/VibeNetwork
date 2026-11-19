@@ -13,16 +13,14 @@ public class LoginHandler(
     IHttpContextAccessor context) : 
     IRequestHandler<LoginCommand, AuthResponseDto>
 {
-    private readonly AppDbContext _db = db;
-    private readonly PasswordHashService _passwordHasher = passwordHasher;
 
-    public async Task<AuthResponseDto> Handle(LoginCommand request, CancellationToken cancellationToken)
+    public async Task<AuthResponseDto> Handle(LoginCommand request, CancellationToken ct)
     {
         var _context = context.HttpContext ?? throw new Exception("An unexpected error occurred");
 
-        var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+        var user = await db.Users.FirstOrDefaultAsync(u => u.Email == request.Email, ct);
 
-        if (user is null || _passwordHasher.VerifyPassword(user.PasswordHash, request.Password) == PasswordVerificationResult.Failed)
+        if (user is null || passwordHasher.VerifyPassword(user.PasswordHash, request.Password) == PasswordVerificationResult.Failed)
             throw new UnauthorizedException(Errors.UserNotFound, "Account not found");
         
         if (user.Role == UserRole.Banned) 
@@ -34,6 +32,8 @@ public class LoginHandler(
             Email = user.Email,
             Username = user.UserName,
             DisplayName = user.DisplayName,
+            FollowersCount = user.FollowersCount,
+            FollowedCount = user.FollowedCount,
             ProfilePictureUrl = user.ProfilePictureURL,
             Role = user.Role
         };
@@ -43,7 +43,7 @@ public class LoginHandler(
         if (!string.IsNullOrWhiteSpace(raw))
         {    
             var hash = RefreshTokenService.Hash(raw);
-            var token = await _db.RefreshTokens.FirstOrDefaultAsync(t => t.TokenHash == hash);
+            var token = await db.RefreshTokens.FirstOrDefaultAsync(t => t.TokenHash == hash, ct);
             if (token is not null) token.RevokedAt = DateTime.UtcNow;
         }
         var (newRaw, newHash) = RefreshTokenService.Generate();
@@ -54,8 +54,8 @@ public class LoginHandler(
             UserId = user.Id,
             TokenHash = newHash,
         };
-        await _db.RefreshTokens.AddAsync(newToken);
-        await _db.SaveChangesAsync();
+        await db.RefreshTokens.AddAsync(newToken, ct);
+        await db.SaveChangesAsync(ct);
 
         _context.Response.Cookies.Append("refreshToken", newRaw, new CookieOptions
         {

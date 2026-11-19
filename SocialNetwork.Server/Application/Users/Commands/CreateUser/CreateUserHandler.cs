@@ -1,26 +1,39 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Neo4j.Driver;
 using SocialNetwork.Server.Domain.Entities;
 using SocialNetwork.Server.Infrastructure.Common.Exceptions;
 using SocialNetwork.Server.Infrastructure.Persistence;
 using SocialNetwork.Server.Infrastructure.Services;
 
 namespace SocialNetwork.Server.Application.Users.Commands.CreateUser;
-public class CreateUserHandler(AppDbContext appDbContext, PasswordHashService passwordHashService) : IRequestHandler<CreateUserCommand, Guid>
+public class CreateUserHandler(
+    AppDbContext appDbContext, 
+    PasswordHashService passwordHashService,
+    IDriver neo4j) : IRequestHandler<CreateUserCommand, Guid>
 {
-    private readonly AppDbContext _appDbContext = appDbContext;
-    private readonly PasswordHashService _passwordHashService = passwordHashService;
     public async Task<Guid> Handle(CreateUserCommand command, CancellationToken ct)
     {
-        var emailAlreadyExists = await _appDbContext.Users.AnyAsync(u =>  u.Email == command.Email, ct);
+        var emailAlreadyExists = await appDbContext.Users.AnyAsync(u =>  u.Email == command.Email, ct);
 
         if (emailAlreadyExists) throw new ConflictException(Errors.EmailAlreadyExists, "Email already exist");
 
-        var user = new UserScaffold(command.Email, command.Username, _passwordHashService.Hash(command.Password));
+        var user = new UserScaffold(command.Email, command.Username, passwordHashService.Hash(command.Password));
 
-        await _appDbContext.Users.AddAsync(user, ct);
-        await _appDbContext.SaveChangesAsync(ct);
+        await appDbContext.Users.AddAsync(user, ct);
+        await appDbContext.SaveChangesAsync(ct);
 
+        var session = neo4j.AsyncSession();
+
+        await session.RunAsync(
+            """
+            CREATE (u:User {id: $userId})
+            """, 
+            new
+            {
+                userId = user.Id
+            });
+        
         return user.Id;
     }
 }

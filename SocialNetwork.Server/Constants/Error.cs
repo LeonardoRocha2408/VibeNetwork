@@ -1,17 +1,19 @@
 public enum Errors
 {
     EmailAlreadyExists,
-    UsernameAlreadyExists,
+
+    Forbidden,
 
     InvalidCredentials,      
-    InvalidRefreshToken,     
-    SessionExpired,
+    InvalidRefreshToken,  
 
-    Forbidden,      
+    PostNotFound,
+       
+    SessionExpired,
+      
     Unauthorized,      
 
+    UsernameAlreadyExists,
     UserNotFound,
-    PostNotFound,
-
     UserBanned
 }

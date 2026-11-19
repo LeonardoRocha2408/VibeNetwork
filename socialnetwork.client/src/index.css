@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+body, html {
+  background-color: var(--background-color);
+}
+
 @utility border-gradient {
     border: 2px solid transparent;
     background:
@@ -20,4 +24,47 @@ input:autofill {
     caret-color: white;
     -webkit-box-shadow: 0 0 0 1000px #000 inset;
     box-shadow: 0 0 0 1000px #000 inset;
+}
+
+.theme-dark {
+    --background-color: #04020c;
+    --bottom-bar: #0A0915;
+    --card-background: #0F0C21;
+    --sidebar-background: #140F35;
+    --stories-border: linear-gradient(135deg, #493291, #5E40Ef, #1635B1);
+    --main-text-color: #F2EEFF;
+    --secondary-text-color: #75747a;
+    --logo-and-button-color: linear-gradient(135deg, #6332FD, #5E40EF, #1635B1);
+}
+
+.theme-light {
+    --background-color: #FFFFFF;
+    --bottom-bar: #F4F9FF;
+    --card-background: #F5F1FF;
+    --stories-border: linear-gradient(135deg, #493291, #5E40Ef, #1635B1);
+    --main-text-color: #29204F;
+    --secondary-text-color: #70698D;
+    --logo-and-button-color: linear-gradient(135deg, #6332FD, #5E40EF, #1635B1);
+}
+
+.app-background {
+    background-color: var(--background-color);
+    p {
+        color: var(--main-text-color);
+    }
+}
+.app-card {
+    background-color: var(--card-background);
+    p {
+        color: var(--main-text-color);
+    }
+    span {
+        color: var(--secondary-text-color);
+    }
+}
+.app-border {
+    border: 2px solid transparent;
+    background:
+    linear-gradient(var(--card-background), var(--card-background)) padding-box,
+    var(--stories-border) border-box;
 }

@@ -1,4 +1,3 @@
-import Header from "../components/header";
 import { useAppState } from "../pages/useAppStore";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
@@ -16,11 +15,6 @@ export function RoleGuard({allowedRoles}: RoleGuardProps) {
     if (allowedRoles && !allowedRoles.includes(user.role)) {
         return <Navigate to="/forbbiden"/>
     }
-    
-    return (
-        <>
-            <Header />
-            <Outlet />
-        </>
-    )
+
+    return <Outlet />
 }

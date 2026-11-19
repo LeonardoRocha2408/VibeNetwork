@@ -6,6 +6,9 @@ using SocialNetwork.Server.Infrastructure.Services;
 using SocialNetwork.Server.Middlewares;
 
 Env.Load();
+var envPath = Path.Combine(Directory.GetCurrentDirectory(), ".env");
+Console.WriteLine($"Env file: {envPath}");
+Console.WriteLine($"Env file exists: {File.Exists(envPath)}");
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,9 +23,13 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
 });
 
-// Configure "PasswordHashService" as service 
-builder.Services.AddScoped<PasswordHashService>();
-builder.Services.AddSingleton<PasswordHasher<UserScaffold>>();
+// Configure services used in VibeNetwork
+builder.Services
+    .AddJwtConfig()
+    .AddServicesConfig()
+    .AmazonSqsConfig()
+    .AddNeoDatabaseConfig()
+    .AddSwaggerGenConfig();
 
 // Configure MediatR
 builder.Services.MediatrConfig();
@@ -31,7 +38,11 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    });
 }
 
 app.UseMiddleware<ExceptionMiddleware>();

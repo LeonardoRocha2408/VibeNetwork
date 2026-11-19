@@ -15,6 +15,12 @@ public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddlewa
         }
         catch (Exception exception)
         {
+            _logger.LogError(
+                exception,
+                "Erro ao processar {Method} {Path}",
+                context.Request.Method,
+                context.Request.Path);
+
             await HandleAsync(context, exception);
         }
     }

@@ -7,9 +7,13 @@ namespace SocialNetwork.Server.Domain.Entities;
 public class UserScaffold
 {
     [Column("id")]
-    public Guid Id { get; private set; } = Guid.NewGuid();
+    public Guid Id { get; private set; } = Guid.CreateVersion7();
     [Column("email")]
     public string Email { get; private set; } = string.Empty;
+    [Column("followers_count")]
+    public int FollowersCount { get; set; }
+    [Column("followed_count")]
+    public int FollowedCount { get; set; }
     [Column("display_name")]
     public string DisplayName { get; private set; } = string.Empty;
     [Column("username")]
@@ -50,7 +54,7 @@ public static class UserFluentApi
             .Property(x => x.Email)
             .HasMaxLength(255)
             .HasColumnName("email")
-           .IsRequired();
+            .IsRequired();
             entity
             .HasIndex(u => u.Email)
             .IsUnique();
