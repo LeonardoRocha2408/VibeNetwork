@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Heart, MessageCircle, Repeat2, Icon } from "lucide-react";
+import { likePost } from "../pages/home/api";
 
 interface Post {
     id: string,
@@ -7,15 +8,17 @@ interface Post {
     profilePictureUrl: string,
     content: string,
     likesCount: number,
-    commentsCount: number
+    commentsCount: number,
 }
 
 interface PostProps {
-    posts: Post[]
+    posts: Post[],
+    userId: string | undefined,
+    accessToken: string | null | undefined
 }
 
 
-export default function PostCard({posts}: PostProps) {
+export default function PostCard({posts, userId, accessToken}: PostProps) {
     const [like, setLike] = useState<Record<string, boolean>>({});
     const [likeCount, setLikeCount] = useState<Record<string, number>>(() => 
             Object.fromEntries(posts.map(post => [post.id, post.likesCount])))
@@ -49,7 +52,8 @@ export default function PostCard({posts}: PostProps) {
                                     }));
                                     setLikeCount(prev => ({
                                         ...prev, [post.id]: (prev[post.id] ?? post.likesCount) + (isLiked ? -1 : 1)
-                                    }))
+                                    }));
+                                    likePost({postId: post.id, userId: userId, isLiked: isLiked, accessToken: accessToken});
                                 }}/>
                         </div>
                         <div className="flex items-center gap-1">

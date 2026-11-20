@@ -9,7 +9,7 @@ export function RoleGuard({allowedRoles}: RoleGuardProps) {
     const {user, session} = useAppState();;
     const location = useLocation();
 
-    if (!session?.accessToken || !user) {
+    if (!session?.accessToken || !user || session.expireAt < new Date()) {
         return <Navigate to="/login" state={{from: location}} replace/>
     }
     if (allowedRoles && !allowedRoles.includes(user.role)) {

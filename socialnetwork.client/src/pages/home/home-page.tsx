@@ -4,6 +4,7 @@ import PostCard from "../../components/posts";
 
 export default function HomePage() {
     const { user, session } = useAppState();
+    const accessToken = session?.accessToken;
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(0);
@@ -41,7 +42,7 @@ export default function HomePage() {
 
     return (
         <div className="h-screen w-screen overflow-x-hidden">
-            <PostCard posts={posts}/>
+            <PostCard posts={posts} userId={user?.id} accessToken={session?.accessToken}/>
         </div>
     );
 }

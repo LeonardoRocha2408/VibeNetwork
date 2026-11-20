@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Neo4j.Driver;
 using SocialNetwork.Server.DTOs;
 using SocialNetwork.Server.Infrastructure.Persistence;
+using SocialNetwork.Server.Services;
 using StackExchange.Redis;
 
 namespace  SocialNetwork.Server.Application.Feed.Queries;

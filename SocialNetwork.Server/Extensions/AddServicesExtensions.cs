@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SocialNetwork.Server.Domain.Entities;
 using SocialNetwork.Server.Infrastructure.Services;
+using SocialNetwork.Server.Services;
 
 namespace SocialNetwork.Server.Extensions;
 

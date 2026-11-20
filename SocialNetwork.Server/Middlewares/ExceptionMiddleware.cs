@@ -39,6 +39,7 @@ public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddlewa
             ConflictException ex => (HttpStatusCode.Conflict, ex.Message, ex.Code.ToString()),
             CredentialsNullException ex => (HttpStatusCode.InternalServerError, ex.Message, ex.Code.ToString()),
             NotFoundException ex => (HttpStatusCode.NotFound, ex.Message, ex.Code.ToString()),
+            ForbiddenException ex => (HttpStatusCode.Forbidden, ex.Message, ex.Code.ToString()),
             UnauthorizedException ex => (HttpStatusCode.Unauthorized, ex.Message, ex.Code.ToString()),
             _ => (HttpStatusCode.InternalServerError, "An unexpected error occurred", null)
         };

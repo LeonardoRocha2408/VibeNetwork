@@ -25,18 +25,22 @@ public class CreatePostHandler(
         await db.SaveChangesAsync(ct);
 
         await using var session = neoDatabase.AsyncSession();
-
-        await session.RunAsync(
-            """
-            MERGE (u:User {id: $userId})
-            CREATE (p:Post {id: $postId})
-            CREATE (u)-[:CREATED]->(p)
-            """,
-            new
-            {
-                userId = request.UserId,
-                postId = newPost.Id
-            });
+        await session.ExecuteWriteAsync(async tx =>
+        {
+            var result = await tx.RunAsync(
+                """
+                MATCH (u:User {id: $userId})
+                CREATE (p:Post {id: $postId})
+                CREATE (u)-[r:CREATED]->(p)
+                """,
+                new
+                {
+                    userId = request.UserId.ToString(),
+                    postId = newPost.Id.ToString()
+                }
+            );
+            await result.ConsumeAsync();
+        });
         
         var json = JsonSerializer.Serialize(new
         {

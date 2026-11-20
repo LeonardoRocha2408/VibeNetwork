@@ -31,7 +31,7 @@ public class CreateUserHandler(
             """, 
             new
             {
-                userId = user.Id
+                userId = user.Id.ToString()
             });
         
         return user.Id;
