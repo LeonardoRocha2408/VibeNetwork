@@ -5,6 +5,7 @@ using SocialNetwork.Server.Application.Users.DTOs;
 using SocialNetwork.Server.Infrastructure.Common.Exceptions;
 using SocialNetwork.Server.Infrastructure.Persistence;
 using SocialNetwork.Server.Infrastructure.Services;
+using SocialNetwork.Server.Services;
 
 namespace SocialNetwork.Server.Application.Users.Commands.Login;
 public class LoginHandler(
