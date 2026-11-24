@@ -6,7 +6,7 @@ export function GuestGuard() {
 
     const isAuthenticated =
         user !== null &&
-        session?.accessToken != null;
+        session?.accessToken !== null;
 
     return isAuthenticated ? <Navigate to="/" replace /> : <Outlet />;
 }

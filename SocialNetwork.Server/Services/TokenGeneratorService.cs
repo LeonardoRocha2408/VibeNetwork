@@ -1,16 +1,16 @@
-using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
-using SocialNetwork.Server.Application.Users.DTOs;
-using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using SocialNetwork.Server.Application.Users.DTOs;
 using SocialNetwork.Server.Infrastructure.Common.Exceptions;
 
-namespace SocialNetwork.Server.Infrastructure.Services;
+namespace SocialNetwork.Server.Services;
 public static class TokenGeneratorService
 {
     public static (string jwt, DateTime expiresAt) TokenGenerator(UserDto user)
     {
-        const int AccesTokenMinutes = 30;
+        const int accessTokenMinutes = 30;
         var claims = new List<Claim>
         {
             new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
@@ -26,7 +26,7 @@ public static class TokenGeneratorService
 
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        var expiresAt = DateTime.UtcNow.AddMinutes(AccesTokenMinutes);
+        var expiresAt = DateTime.UtcNow.AddMinutes(accessTokenMinutes);
 
         var token = new JwtSecurityToken
         (
