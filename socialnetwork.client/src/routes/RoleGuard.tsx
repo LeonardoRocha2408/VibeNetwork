@@ -1,5 +1,6 @@
 import { useAppState } from "../pages/useAppStore";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import TokenRefreshManager from "./TokenRefreshManager";
 
 interface RoleGuardProps {
     allowedRoles: ("User" | "Admin")[];
@@ -16,5 +17,5 @@ export function RoleGuard({allowedRoles}: RoleGuardProps) {
         return <Navigate to="/forbbiden"/>
     }
 
-    return <Outlet />
+    return ( <> <TokenRefreshManager /> <Outlet /> </>)
 }

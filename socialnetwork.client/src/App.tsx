@@ -6,6 +6,7 @@ import HomePage from "./pages/home/home-page";
 import { GuestGuard } from "./routes/GuestGuard";
 import { useAppState } from "./pages/useAppStore";
 import ProtectedLayout from "./routes/ProtectedLayout";
+import TokenRefreshManager from "./routes/TokenRefreshManager";
 
 export default function App() {
     const { theme } = useAppState();

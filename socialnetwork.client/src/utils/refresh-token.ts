@@ -8,7 +8,7 @@ export async function refreshToken({user, session}: RefreshTokenProps): Promise<
     if (user === null || session === null)
         return null;
     try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/refresh-token`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/refresh-token`, {
                 method: "POST",
                 credentials: "include",
                 headers: {

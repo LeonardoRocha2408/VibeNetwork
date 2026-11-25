@@ -1,8 +1,10 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Neo4j.Driver;
+using SocialNetwork.Server.Infrastructure.Persistence;
 namespace SocialNetwork.Server.Application.Feed.Commands.LikePost;
 
-public class LikePostHandler(IDriver neo) : IRequestHandler<LikePostCommand, bool>
+public class LikePostHandler(IDriver neo, AppDbContext db) : IRequestHandler<LikePostCommand, bool>
 {
     
     public async Task<bool> Handle(LikePostCommand request, CancellationToken ct)
@@ -26,6 +28,12 @@ public class LikePostHandler(IDriver neo) : IRequestHandler<LikePostCommand, boo
                 );
                 await result.ConsumeAsync();
             });
+
+            await db.Posts
+                .Where(p => p.Id == request.PostId)
+                .ExecuteUpdateAsync(s => s 
+                .SetProperty(p => p.LikesCount, p => p.LikesCount - 1), ct);
+
             return true;
         }
         await session.ExecuteWriteAsync(async tx =>
@@ -42,6 +50,11 @@ public class LikePostHandler(IDriver neo) : IRequestHandler<LikePostCommand, boo
                 });
             await result.ConsumeAsync();
         });
+
+        await db.Posts
+                .Where(p => p.Id == request.PostId)
+                .ExecuteUpdateAsync(s => s 
+                .SetProperty(p => p.LikesCount, p => p.LikesCount + 1), ct);
 
         return true;
     }

@@ -1,12 +1,8 @@
-import { ReactNode, useEffect } from "react";
+import { useEffect } from "react";
 import { refreshToken } from "../utils/refresh-token";
 import { useAppState } from "../pages/useAppStore";
 
-interface TokenRefreshManagerProps {
-    children: ReactNode;
-}
-
-export default function TokenRefreshManager({ children }: TokenRefreshManagerProps) {
+export default function TokenRefreshManager() {
     const { user, session, login } = useAppState();
     useEffect(() => {
         if (!session || session.expireAt == undefined)

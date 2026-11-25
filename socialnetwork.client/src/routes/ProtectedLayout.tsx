@@ -6,12 +6,14 @@ export default function ProtectedLayout() {
     return (
         <>
             <div className="md:ml-25">
-            <Header/>
+                <Header />
             </div>
+
             <Navbar />
+
             <main className="md:ml-25">
                 <Outlet />
             </main>
         </>
-    )
+    );
 }
