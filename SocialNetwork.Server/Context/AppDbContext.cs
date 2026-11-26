@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SocialNetwork.Server.Domain.Entities;
+using SocialNetwork.Server.Scaffolds;
 
 namespace SocialNetwork.Server.Infrastructure.Persistence
 {

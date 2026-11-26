@@ -33,9 +33,7 @@ public class LoginHandler(
             Email = user.Email,
             Username = user.UserName,
             DisplayName = user.DisplayName,
-            FollowersCount = user.FollowersCount,
-            FollowedCount = user.FollowedCount,
-            ProfilePictureUrl = user.ProfilePictureURL,
+            ProfilePictureUrl = user.ProfilePictureUrl,
             Role = user.Role
         };
 

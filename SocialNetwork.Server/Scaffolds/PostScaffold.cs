@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
-using SocialNetwork.Server.Domain.Entities;
+using SocialNetwork.Server.Scaffolds;
 
 public class PostScaffold
 {

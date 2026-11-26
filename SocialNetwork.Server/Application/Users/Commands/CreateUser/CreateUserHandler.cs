@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Neo4j.Driver;
-using SocialNetwork.Server.Domain.Entities;
 using SocialNetwork.Server.Infrastructure.Common.Exceptions;
 using SocialNetwork.Server.Infrastructure.Persistence;
 using SocialNetwork.Server.Infrastructure.Services;
+using SocialNetwork.Server.Scaffolds;
 
 namespace SocialNetwork.Server.Application.Users.Commands.CreateUser;
 public class CreateUserHandler(

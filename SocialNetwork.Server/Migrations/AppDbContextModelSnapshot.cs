@@ -106,7 +106,7 @@ namespace SocialNetwork.Server.Migrations
                     b.ToTable("refresh_tokens");
                 });
 
-            modelBuilder.Entity("SocialNetwork.Server.Domain.Entities.UserScaffold", b =>
+            modelBuilder.Entity("SocialNetwork.Server.Scaffolds.UserScaffold", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -130,19 +130,14 @@ namespace SocialNetwork.Server.Migrations
                         .HasColumnName("email");
 
                     b.Property<int>("FollowedCount")
-                        .HasColumnType("int")
-                        .HasColumnName("followed_count");
-
-                    b.Property<int>("FollowersCount")
-                        .HasColumnType("int")
-                        .HasColumnName("followers_count");
+                        .HasColumnType("int");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("password_hash");
 
-                    b.Property<string>("ProfilePictureURL")
+                    b.Property<string>("ProfilePictureUrl")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
@@ -174,7 +169,7 @@ namespace SocialNetwork.Server.Migrations
 
             modelBuilder.Entity("PostScaffold", b =>
                 {
-                    b.HasOne("SocialNetwork.Server.Domain.Entities.UserScaffold", "Author")
+                    b.HasOne("SocialNetwork.Server.Scaffolds.UserScaffold", "Author")
                         .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -185,7 +180,7 @@ namespace SocialNetwork.Server.Migrations
 
             modelBuilder.Entity("RefreshTokenScaffold", b =>
                 {
-                    b.HasOne("SocialNetwork.Server.Domain.Entities.UserScaffold", "User")
+                    b.HasOne("SocialNetwork.Server.Scaffolds.UserScaffold", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

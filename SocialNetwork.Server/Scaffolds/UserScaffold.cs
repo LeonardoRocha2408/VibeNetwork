@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace SocialNetwork.Server.Domain.Entities;
+namespace SocialNetwork.Server.Scaffolds;
 
 [Table("users")]
 public class UserScaffold
@@ -10,9 +10,6 @@ public class UserScaffold
     public Guid Id { get; private set; } = Guid.CreateVersion7();
     [Column("email")]
     public string Email { get; private set; } = string.Empty;
-    [Column("followers_count")]
-    public int FollowersCount { get; set; }
-    [Column("followed_count")]
     public int FollowedCount { get; set; }
     [Column("display_name")]
     public string DisplayName { get; private set; } = string.Empty;
@@ -21,7 +18,7 @@ public class UserScaffold
     [Column("password_hash")]
     public string PasswordHash { get; private set; } = string.Empty;
     [Column("profile_picture_url")]
-    public string ProfilePictureURL {  get; private set; } = string.Empty;
+    public string ProfilePictureUrl {  get; private set; } = string.Empty;
     [Column("role")]
     public UserRole Role { get; set; }
     [Column("created_at")]
@@ -37,7 +34,7 @@ public class UserScaffold
         PasswordHash = passwordHash;
     }
 
-    public void UpdateProfilePicture(string profilePictureURL) => ProfilePictureURL = profilePictureURL;
+    public void UpdateProfilePicture(string profilePictureURL) => ProfilePictureUrl = profilePictureURL;
     public void UpdateDisplayName(string displayName) => DisplayName = displayName;
     public void UpdateUserName(string username) => UserName = username;
 }
@@ -81,7 +78,7 @@ public static class UserFluentApi
             .IsRequired();
 
             entity
-            .Property(u => u.ProfilePictureURL)
+            .Property(u => u.ProfilePictureUrl)
             .HasMaxLength(255)
             .HasColumnName("profile_picture_url");
 

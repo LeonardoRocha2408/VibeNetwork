@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
-using SocialNetwork.Server.Domain.Entities;
+using SocialNetwork.Server.Scaffolds;
 
 [Table("refresh_tokens")]
 public class RefreshTokenScaffold

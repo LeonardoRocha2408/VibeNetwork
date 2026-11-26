@@ -1,6 +1,5 @@
 using DotNetEnv;
 using Microsoft.AspNetCore.Identity;
-using SocialNetwork.Server.Domain.Entities;
 using SocialNetwork.Server.Extensions;
 using SocialNetwork.Server.Infrastructure.Services;
 using SocialNetwork.Server.Middlewares;

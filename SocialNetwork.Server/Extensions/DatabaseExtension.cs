@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SocialNetwork.Server.Domain.Entities;
 using SocialNetwork.Server.Infrastructure.Persistence;
 
 namespace SocialNetwork.Server.Extensions
